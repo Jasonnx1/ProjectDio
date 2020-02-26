@@ -3,17 +3,37 @@ class Organism extends Object
   Food target;
   PVector xoff = new PVector(0,0);
   PVector yoff = new PVector(0,0);
-  float speed = 1.0;
+  float speed;
+  float range;
+  float size;
+  float energy;
+  float timer = 0;
 
   
-  Organism(int x, int y)
+  Organism(float x, float y)
   {
-    location = new PVector(x,y);
-     noiseSeed( millis() );
+     location = new PVector(x,y);
+     noiseSeed( (long)random(0, 1000000) );
+     speed = 2;
+     range = 150;
+     size = 10;
+     energy = 1000;
   }
   
   void update(float deltaTime)
   {
+    
+    timer += deltaTime;
+    if(timer > 1000)
+    {
+     
+      energy -= size*speed;
+      timer = 0;
+      println(energy);
+      
+    }
+    
+    
     if(target != null)
     {
       PVector _target = new PVector();
@@ -26,24 +46,39 @@ class Organism extends Object
     {
       seek();
     }
+    
+    if(location.x < size)
+    location .x = size;
+    
+    if (location.y < size)
+    location.y = size;
+    
+    if(location.x > width - size)
+    location.x = width - size;
+    
+    if(location.y > height - size)
+    location.y = height - size;
+    
   }
   
   void display()
   {
     fill(0,255,0,0);
     stroke(100,100,255);
-    ellipse(location.x, location.y, 150,150);
+    ellipse(location.x, location.y, range*2, range*2);
     fill(fillColor);
     stroke(strokeColor);
-    ellipse(location.x, location.y, 20,20);
+    ellipse(location.x, location.y, size*2, size*2);
   }
   
   void findFood(ArrayList<Food> fL)
   {
     for(Food f : fL)
     {
-      if(location.dist(f.location) < 75)
+      if(location.dist(f.location) < range)
       {
+        
+        
         if(target == null) 
         {
           target = f;
@@ -59,10 +94,6 @@ class Organism extends Object
     }
   }
   
-  void getFood()
-  {
-    
-  }
   
   boolean eat()
   {
@@ -71,6 +102,8 @@ class Organism extends Object
       if(location.dist(target.location) < 5)
       {
         // nutrition();
+        energy += target.NutritiousValue;
+        println(energy);
         return true;
       }
     }
@@ -102,7 +135,7 @@ class Organism extends Object
     }
     // Make it a bit faster
 
-    println(dir.x + " , " + dir.y);
+    dir.mult(speed);
     dir.limit(speed);
     // Add Velocity
     

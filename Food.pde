@@ -1,9 +1,9 @@
 class Food extends Object
 {
-  int NutritiousValue = 10;
+  int NutritiousValue = 100;
   int CollectionTime = 10;
   
-  Food(int x, int y)
+  Food(float x, float y)
   {
     location = new PVector(x,y);
     fillColor = color(50,255,50);
@@ -11,6 +11,7 @@ class Food extends Object
   
   void update(float deltaTime)
   {
+    
     
   }
   

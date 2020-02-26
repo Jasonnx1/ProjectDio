@@ -2,19 +2,23 @@ int previousTime;
 int deltaTime;
 int currentTime;
 Organism org;
-ArrayList<Food> foodList;
+ArrayList<Organism> orgs;
+FoodFactory ff;
 
 void setup()
 {
-  size(640, 480);
+  size(800, 600);
   currentTime = millis();
   previousTime = millis();
-  
-  foodList = new ArrayList<Food>();
-  foodList.add(new Food(150,150));
-  foodList.add(new Food(350,350));
-  foodList.add(new Food(130,130));
-  org = new Organism(100,100);
+  ff = new FoodFactory();
+  ff.foods = new ArrayList<Food>();
+  ff.foods.add(new Food(150,150));
+  ff.foods.add(new Food(350,350));
+  ff.foods.add(new Food(130,130));
+  orgs = new ArrayList<Organism>();
+  orgs.add(new Organism( random(0, width), random(0, height)));
+  orgs.add(new Organism( random(0, width), random(0, height)));
+    orgs.add(new Organism( random(0, width), random(0, height)));
 }
 
 
@@ -31,15 +35,24 @@ void draw()
 
 void update(int deltatime)
 {
-  org.update(deltatime);
-  org.findFood(foodList);
-  if(org.eat())
-  {
-    foodList.remove(org.target);
-    org.target = null;
-  }
+  ff.update(deltatime);
   
-  for(Food f : foodList)
+  for(Organism o : orgs)
+  {
+    
+    o.findFood(ff.foods);
+    o.update(deltatime);
+    
+    if(o.eat())
+    {
+      ff.foods.remove(o.target);
+      o.target = null;      
+    }
+    
+  }
+
+  
+  for(Food f : ff.foods)
   {
     f.update(deltatime);
   }
@@ -49,9 +62,13 @@ void display()
 {
   background(#3BBF32);
   
-  org.display();
   
-  for(Food f : foodList)
+  for(Organism o : orgs)
+  {
+    o.display();
+  }
+  
+  for(Food f : ff.foods)
   {
     f.display();
   }
