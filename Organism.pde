@@ -1,18 +1,25 @@
 class Organism extends Object
 {
   Food target;
+  PVector xoff = new PVector(0,0);
+  PVector yoff = new PVector(0,0);
+
   
   Organism(int x, int y)
   {
     location = new PVector(x,y);
+     noiseSeed( millis() );
   }
   
   void update(float deltaTime)
   {
     if(target != null)
     {
-      location.x = lerp(location.x, target.location.x, 0.05);
-      location.y = lerp(location.y, target.location.y, 0.05);
+      PVector _target = new PVector();
+      _target = target.location.copy();
+      PVector dir = _target.sub(location);
+      dir.limit(1);
+      location.add(dir);
     }
     else
     {
@@ -71,6 +78,34 @@ class Organism extends Object
   
   void seek()
   {
+    // Randomise X velocity
+    float x = noise(xoff.x, xoff.y);
+    xoff.x += 0.002;
+    yoff.y += 0.002;
+    
+    if(x < 0.5)
+    {
+      x *= -1;
+    }
+ 
+    // Randomise Y velocity
+    float y = noise(yoff.x, yoff.y);
+    yoff.x+= 0.005;
+    yoff.y += 0.005;
+     
+    if(y < 0.5)
+    {
+      y *= -1;
+    }
+    // Make it a bit faster
+    y*= 1.5;
+    x*= 1.5;
+    
+    // Add Velocity
+    location.x += x;
+    location.y += y;
+    
+    
     
   }
 }

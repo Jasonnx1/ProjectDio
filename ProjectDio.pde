@@ -56,3 +56,13 @@ void display()
     f.display();
   }
 }
+
+void keyPressed()
+{
+  switch(key)
+  {
+   case 'r':   setup();
+    break;
+  }
+
+}
