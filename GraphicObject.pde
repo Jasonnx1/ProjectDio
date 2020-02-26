@@ -5,8 +5,8 @@ PVector velocity;
 PVector acceleration;
 
 color fillColor = color (255);
-color strokeColor = color (255);
-color strokeWeight = 1;
+color strokeColor = color (0);
+int strokeWeight = 1;
 
 
 
