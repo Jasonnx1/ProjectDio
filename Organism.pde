@@ -3,6 +3,7 @@ class Organism extends Object
   Food target;
   PVector xoff = new PVector(0,0);
   PVector yoff = new PVector(0,0);
+  float speed = 1.0;
 
   
   Organism(int x, int y)
@@ -18,7 +19,7 @@ class Organism extends Object
       PVector _target = new PVector();
       _target = target.location.copy();
       PVector dir = _target.sub(location);
-      dir.limit(1);
+      dir.limit(speed);
       location.add(dir);
     }
     else
@@ -79,31 +80,34 @@ class Organism extends Object
   void seek()
   {
     // Randomise X velocity
-    float x = noise(xoff.x, xoff.y);
+
+    PVector dir = new PVector(0,0);
+    dir.x = noise(xoff.x, xoff.y);
     xoff.x += 0.002;
     yoff.y += 0.002;
     
-    if(x < 0.5)
+    if(dir.x < 0.5)
     {
-      x *= -1;
+     dir.x *= -1;
     }
  
     // Randomise Y velocity
-    float y = noise(yoff.x, yoff.y);
+    dir.y = noise(yoff.x, yoff.y);
     yoff.x+= 0.005;
     yoff.y += 0.005;
      
-    if(y < 0.5)
+    if(dir.y < 0.5)
     {
-      y *= -1;
+      dir.y *= -1;
     }
     // Make it a bit faster
-    y*= 1.5;
-    x*= 1.5;
-    
+
+    println(dir.x + " , " + dir.y);
+    dir.limit(speed);
     // Add Velocity
-    location.x += x;
-    location.y += y;
+    
+    location.add(dir);
+  
     
     
     
