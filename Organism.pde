@@ -6,7 +6,7 @@ class Organism extends Object
   float speed;
   float range;
   float size;
-  float energy;
+  int energy;
   float timer = 0;
 
   
@@ -29,7 +29,6 @@ class Organism extends Object
      
       energy -= size*speed;
       timer = 0;
-      println(energy);
       
     }
     
@@ -69,6 +68,8 @@ class Organism extends Object
     fill(fillColor);
     stroke(strokeColor);
     ellipse(location.x, location.y, size*2, size*2);
+    fill(0);
+    text(energy, location.x-10, location.y-10);
   }
   
   void findFood(ArrayList<Food> fL)
