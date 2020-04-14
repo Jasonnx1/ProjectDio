@@ -15,7 +15,7 @@ public class FoodFactory
  {
    
    timer += deltaTime;
-   if(timer > 1000)
+   if(timer > 500)
    {
     timer = 0;
     foods.add( new Food(random(10, width - 10), random(10, height - 10) ) );

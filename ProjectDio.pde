@@ -20,9 +20,9 @@ void setup()
   orgs = new ArrayList<Organism>();
   deadOrgs = new ArrayList<Organism>();
   newOrgs = new ArrayList<Organism>();
-  orgs.add(new Organism( random(0, width), random(0, height)));
-  orgs.add(new Organism( random(0, width), random(0, height)));
-  orgs.add(new Organism( random(0, width), random(0, height)));
+  orgs.add(new Organism());
+  orgs.add(new Organism());
+  orgs.add(new Organism());
 }
 
 
@@ -60,8 +60,8 @@ void update(int deltatime)
     }
     else if(o.energy > int(o.speed*o.size*15))
     {
-      newOrgs.add(new Organism( o.location.x, o.location.y));
-      o.energy -= int(o.speed*o.size*5);
+      newOrgs.add(new Organism(o));
+      o.energy = int(o.speed*o.size*5);
     }
   }
   

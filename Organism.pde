@@ -8,17 +8,82 @@ class Organism extends Object
   float size;
   int energy;
   float timer = 0;
-
   
-  Organism(float x, float y)
+  int mutationFactor, mutationChance;
+  int r,g,b;
+
+//=============================Constructors=============================
+
+//-----------------------------Basic---------------------------- 
+  Organism()
   {
-     location = new PVector(x,y);
+     location = new PVector(random(0, width), random(0, height));
      noiseSeed( (long)random(0, 1000000) );
      speed = 2;
-     range = 150;
      size = 10;
+     range = 150;
+     r = 150; g = 150; b = 150;
+     fillColor = color(r,g,b);
      energy = int(speed*size*10);
   }
+  
+  
+  Organism(Organism parent)
+  {
+     location = new PVector(parent.location.x + random(-20,20),parent.location.y + random(-20,20));
+     noiseSeed( (long)random(0, 1000000) );
+     
+     //~~~~~~~~~Speed~~~~~~~~~
+     mutationChance = int (random(20));
+     if(mutationChance == 0)
+     {
+       mutationFactor = int (random(3));
+       speed = parent.speed - 1 + mutationFactor;
+       r = parent.r - 1 + mutationFactor;
+     }
+     else 
+     {
+       speed = parent.speed;
+       r = parent.r;
+     }
+     
+     //~~~~~~~~~Size~~~~~~~~~
+     mutationChance = int (random(20));
+     if(mutationChance == 0)
+     {
+       mutationFactor = int (random(5));
+       size = parent.size - 2 + mutationFactor;
+       g = parent.g - 2 + mutationFactor;
+     }
+     else 
+     { 
+       size = parent.size;
+       g = parent.g;
+     }
+     
+     //~~~~~~~~~Range~~~~~~~~~
+     mutationChance = int (random(20));
+     if(mutationChance == 0)
+     {
+       mutationFactor = int (random(11));
+       range = parent.range - 5 + mutationFactor;
+       b = parent.b - 5 + mutationFactor;
+     }
+     else 
+     {
+       range = parent.range;
+       b = parent.b;
+     }
+     
+     
+     fillColor = color(r,g,b);
+     energy = int(speed*size*10);
+  }
+  
+  
+  
+  
+//=============================Update=============================
   
   void update(float deltaTime)
   {
@@ -31,8 +96,7 @@ class Organism extends Object
       timer = 0;
       
     }
-    
-    
+ 
     if(target != null)
     {
       PVector _target = new PVector();
@@ -60,6 +124,10 @@ class Organism extends Object
     
   }
   
+  
+  
+//=============================Display=============================
+  
   void display()
   {
     fill(0,255,0,0);
@@ -71,7 +139,12 @@ class Organism extends Object
     fill(0);
     text(energy, location.x-10, location.y-10);
   }
-  
+
+
+
+//=============================Functions=============================  
+
+//-----------------------------Find Food----------------------------- 
   void findFood(ArrayList<Food> fL)
   {
     for(Food f : fL)
@@ -95,7 +168,7 @@ class Organism extends Object
     }
   }
   
-  
+//-----------------------------Eat-----------------------------   
   boolean eat()
   {
     if(target != null)
@@ -110,7 +183,8 @@ class Organism extends Object
     }
     return false;
   }
-  
+
+//-----------------------------Seek----------------------------- 
   void seek()
   {
     // Randomise X velocity
@@ -141,9 +215,7 @@ class Organism extends Object
     // Add Velocity
     
     location.add(dir);
-  
-    
-    
-    
   }
+  
+  
 }
