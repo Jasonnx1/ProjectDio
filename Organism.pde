@@ -32,7 +32,7 @@ class Organism extends Object
   Organism(Organism parent)
   {
      location = new PVector(parent.location.x + random(-20,20),parent.location.y + random(-20,20));
-     noiseSeed( (long)random(0, 1000000) );
+     seed = ( (long)random(0, 1000000) );
      
      //~~~~~~~~~Speed~~~~~~~~~
      mutationChance = int (random(20));
@@ -40,7 +40,7 @@ class Organism extends Object
      {
        mutationFactor = int (random(3));
        speed = parent.speed - 1 + mutationFactor;
-       r = parent.r - 1 + mutationFactor;
+       r = (parent.r - 1 + mutationFactor)*5;
      }
      else 
      {
@@ -54,7 +54,7 @@ class Organism extends Object
      {
        mutationFactor = int (random(5));
        size = parent.size - 2 + mutationFactor;
-       g = parent.g - 2 + mutationFactor;
+       g = (parent.g - 2 + mutationFactor)*5;
      }
      else 
      { 
@@ -68,7 +68,7 @@ class Organism extends Object
      {
        mutationFactor = int (random(11));
        range = parent.range - 5 + mutationFactor;
-       b = parent.b - 5 + mutationFactor;
+       b = (parent.b - 5 + mutationFactor)*5;
      }
      else 
      {
@@ -78,7 +78,7 @@ class Organism extends Object
      
      
      fillColor = color(r,g,b);
-     energy = int(speed*size*10);
+     energy = int(speed*size*5);
   }
   
   

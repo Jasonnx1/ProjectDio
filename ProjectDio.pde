@@ -74,7 +74,6 @@ void update(int deltatime)
   for(Organism nO : newOrgs)
   {
     orgs.add(nO);
-    nO.energy -= int(nO.speed*nO.size*5);
   }
   newOrgs.clear();
 
