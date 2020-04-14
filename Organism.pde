@@ -8,6 +8,7 @@ class Organism extends Object
   float size;
   int energy;
   float timer = 0;
+  long seed;
   
   int mutationFactor, mutationChance;
   int r,g,b;
@@ -18,13 +19,13 @@ class Organism extends Object
   Organism()
   {
      location = new PVector(random(0, width), random(0, height));
-     noiseSeed( (long)random(0, 1000000) );
      speed = 2;
      size = 10;
      range = 150;
      r = 150; g = 150; b = 150;
      fillColor = color(r,g,b);
      energy = int(speed*size*10);
+     seed = ( (long)random(0, 1000000) );
   }
   
   
@@ -87,6 +88,8 @@ class Organism extends Object
   
   void update(float deltaTime)
   {
+    
+    noiseSeed(seed);
     
     timer += deltaTime;
     if(timer > 1000)
