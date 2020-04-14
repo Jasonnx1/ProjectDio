@@ -1,6 +1,6 @@
 class Food extends Object
 {
-  int NutritiousValue = 100;
+  int NutritiousValue = 50;
   int CollectionTime = 10;
   
   Food(float x, float y)

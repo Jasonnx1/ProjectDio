@@ -2,7 +2,7 @@ int previousTime;
 int deltaTime;
 int currentTime;
 Organism org;
-ArrayList<Organism> orgs;
+ArrayList<Organism> orgs, deadOrgs, newOrgs;
 FoodFactory ff;
 
 void setup()
@@ -10,15 +10,19 @@ void setup()
   size(800, 600);
   currentTime = millis();
   previousTime = millis();
+  
   ff = new FoodFactory();
   ff.foods = new ArrayList<Food>();
   ff.foods.add(new Food(150,150));
   ff.foods.add(new Food(350,350));
   ff.foods.add(new Food(130,130));
+  
   orgs = new ArrayList<Organism>();
+  deadOrgs = new ArrayList<Organism>();
+  newOrgs = new ArrayList<Organism>();
   orgs.add(new Organism( random(0, width), random(0, height)));
   orgs.add(new Organism( random(0, width), random(0, height)));
-    orgs.add(new Organism( random(0, width), random(0, height)));
+  orgs.add(new Organism( random(0, width), random(0, height)));
 }
 
 
@@ -37,6 +41,7 @@ void update(int deltatime)
 {
   ff.update(deltatime);
   
+  
   for(Organism o : orgs)
   {
     
@@ -49,7 +54,29 @@ void update(int deltatime)
       o.target = null;      
     }
     
+    if(o.energy<0)
+    {
+      deadOrgs.add(o);
+    }
+    else if(o.energy > int(o.speed*o.size*15))
+    {
+      newOrgs.add(new Organism( o.location.x, o.location.y));
+      o.energy -= int(o.speed*o.size*5);
+    }
   }
+  
+  for(Organism dO : deadOrgs)
+  {
+    orgs.remove(dO);
+  }
+  deadOrgs.clear();
+  
+  for(Organism nO : newOrgs)
+  {
+    orgs.add(nO);
+    nO.energy -= int(nO.speed*nO.size*5);
+  }
+  newOrgs.clear();
 
   
   for(Food f : ff.foods)

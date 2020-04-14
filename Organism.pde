@@ -17,7 +17,7 @@ class Organism extends Object
      speed = 2;
      range = 150;
      size = 10;
-     energy = 1000;
+     energy = int(speed*size*10);
   }
   
   void update(float deltaTime)
