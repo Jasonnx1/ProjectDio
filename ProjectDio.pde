@@ -53,6 +53,7 @@ void update(int deltatime)
       ff.foods.remove(o.target);
       o.target = null;      
     }
+ 
     
     if(o.energy<0)
     {

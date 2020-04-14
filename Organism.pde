@@ -28,6 +28,32 @@ class Organism extends Object
      seed = ( (long)random(0, 1000000) );
   }
   
+  void checkEdges()
+  {
+    
+    //---------------------Check Edges for loop around--------------------------
+    if(location.x < -size)
+    {      
+      location.x = width + size;      
+    }
+    
+    if(location.x > width + size)
+    {
+      location.x = -size; 
+    }
+    
+    if(location.y < -size)
+    {      
+      location.y = height + size;      
+    }
+    
+    if(location.y > height + size)
+    {
+      location.y = -size; 
+    }
+  
+  }
+  
   
   Organism(Organism parent)
   {
@@ -95,7 +121,7 @@ class Organism extends Object
     if(timer > 1000)
     {
      
-      energy -= size*speed;
+      energy -= (size/2)*speed;
       timer = 0;
       
     }
@@ -113,17 +139,7 @@ class Organism extends Object
       seek();
     }
     
-    if(location.x < size)
-    location .x = size;
-    
-    if (location.y < size)
-    location.y = size;
-    
-    if(location.x > width - size)
-    location.x = width - size;
-    
-    if(location.y > height - size)
-    location.y = height - size;
+    checkEdges();
     
   }
   
@@ -150,12 +166,15 @@ class Organism extends Object
 //-----------------------------Find Food----------------------------- 
   void findFood(ArrayList<Food> fL)
   {
+    
+    target = null;
+    
     for(Food f : fL)
     {
+  
       if(location.dist(f.location) < range)
       {
-        
-        
+  
         if(target == null) 
         {
           target = f;
@@ -163,9 +182,11 @@ class Organism extends Object
         }
         else if(location.dist(f.location) < location.dist(target.location))
         {
+          
           target.fillColor = color(0,0,255);
           target = f;
           target.fillColor = color(255,0,0);
+    
         }
       }
     }
@@ -176,7 +197,7 @@ class Organism extends Object
   {
     if(target != null)
     {
-      if(location.dist(target.location) < 5)
+      if(location.dist(target.location) < size)
       {
         // nutrition();
         energy += target.NutritiousValue;
