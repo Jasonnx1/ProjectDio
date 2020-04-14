@@ -10,7 +10,8 @@ class Organism extends Object
   float timer = 0;
   long seed;
   
-  int mutationFactor, mutationChance;
+  int mutationFactor, mutationRoll;
+  int mutationChance = 1;
   int r,g,b;
 
 //=============================Constructors=============================
@@ -24,7 +25,7 @@ class Organism extends Object
      range = 150;
      r = 150; g = 150; b = 150;
      fillColor = color(r,g,b);
-     energy = int(speed*size*10);
+     energy = int(size*20);
      seed = ( (long)random(0, 1000000) );
   }
   
@@ -61,12 +62,12 @@ class Organism extends Object
      seed = ( (long)random(0, 1000000) );
      
      //~~~~~~~~~Speed~~~~~~~~~
-     mutationChance = int (random(20));
-     if(mutationChance == 0)
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
      {
        mutationFactor = int (random(3));
        speed = parent.speed - 1 + mutationFactor;
-       r = (parent.r - 1 + mutationFactor)*5;
+       r = int ((parent.r - 5 + mutationFactor*5)*5);
      }
      else 
      {
@@ -75,12 +76,12 @@ class Organism extends Object
      }
      
      //~~~~~~~~~Size~~~~~~~~~
-     mutationChance = int (random(20));
-     if(mutationChance == 0)
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
      {
        mutationFactor = int (random(5));
        size = parent.size - 2 + mutationFactor;
-       g = (parent.g - 2 + mutationFactor)*5;
+       g = int ((parent.g - 5 + mutationFactor*2.5)*5);
      }
      else 
      { 
@@ -89,12 +90,12 @@ class Organism extends Object
      }
      
      //~~~~~~~~~Range~~~~~~~~~
-     mutationChance = int (random(20));
-     if(mutationChance == 0)
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
      {
-       mutationFactor = int (random(11));
-       range = parent.range - 5 + mutationFactor;
-       b = (parent.b - 5 + mutationFactor)*5;
+       mutationFactor = int (random(31));
+       range = parent.range - 15 + mutationFactor;
+       b = int ((parent.b - 5 + mutationFactor/3)*5);
      }
      else 
      {
@@ -102,9 +103,9 @@ class Organism extends Object
        b = parent.b;
      }
      
-     
+     gameTime = parent.gameTime;
      fillColor = color(r,g,b);
-     energy = int(speed*size*5);
+     energy = int(size*10);
   }
   
   
@@ -121,7 +122,7 @@ class Organism extends Object
     if(timer > 1000)
     {
      
-      energy -= (size/2)*speed;
+      energy -= (size/2)*speed*gameTime;
       timer = 0;
       
     }
@@ -131,7 +132,9 @@ class Organism extends Object
       PVector _target = new PVector();
       _target = target.location.copy();
       PVector dir = _target.sub(location);
-      dir.limit(speed);
+      dir.limit(speed*gameTime);
+      
+      
       location.add(dir);
     }
     else
@@ -152,6 +155,8 @@ class Organism extends Object
     fill(0,255,0,0);
     stroke(100,100,255);
     ellipse(location.x, location.y, range*2, range*2);
+    stroke(255,100,100);
+    ellipse(location.x, location.y, 300, 300);
     fill(fillColor);
     stroke(strokeColor);
     ellipse(location.x, location.y, size*2, size*2);
@@ -234,8 +239,10 @@ class Organism extends Object
     }
     // Make it a bit faster
 
-    dir.mult(speed);
-    dir.limit(speed);
+    dir.mult(speed*gameTime);
+    dir.limit(speed*gameTime);
+    
+    
     // Add Velocity
     
     location.add(dir);

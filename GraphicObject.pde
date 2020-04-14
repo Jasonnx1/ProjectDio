@@ -1,16 +1,17 @@
-abstract class Object {
+abstract class Object 
+{
+  PVector location;
+  PVector velocity;
+  PVector acceleration;
   
-PVector location;
-PVector velocity;
-PVector acceleration;
-
-color fillColor = color (255);
-color strokeColor = color (0);
-int strokeWeight = 1;
-
-
-
-abstract void update(float deltaTime);
+  color fillColor = color (255);
+  color strokeColor = color (0);
+  int strokeWeight = 1;
+  
+  int gameTime = 1;
+  
+  
+  abstract void update(float deltaTime);
 
  abstract void display();
 
