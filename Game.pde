@@ -3,23 +3,23 @@ class Game
   
   
   ArrayList<Organism> orgs, deadOrgs, newOrgs;
-  FoodFactory ff;
+  PlantFactory pf;
   boolean pause;
   boolean fastForward;
   
   
- Game(int nOrgs, int nFoods)
+ Game(int nOrgs, int nPlants)
  {
    
   pause = false;
   fastForward = false;
   
-  ff = new FoodFactory();
-  ff.foods = new ArrayList<Food>();
+  pf = new PlantFactory();
+  pf.plants = new ArrayList<Plant>();
   
-  for(int i = 0; i < nFoods; i++)
+  for(int i = 0; i < nPlants; i++)
   {
-    ff.foods.add(new Food(random(width),random(height)));    
+    pf.plants.add(new Plant(random(width),random(height)));    
   }
   
   
@@ -41,18 +41,19 @@ class Game
  {
       if(!pause)
       {
-        ff.update(deltatime);
+        pf.update(deltatime);
       
       
         for(Organism o : orgs)
         {
           
-          o.findFood(ff.foods);
-          o.update(deltatime);
+          
+          o.update(deltatime, pf.plants, orgs);
+          //o.findPlant(pf.plants);
           
           if(o.eat())
           {
-            ff.foods.remove(o.target);
+            pf.plants.remove(o.target);
             o.target = null;      
           }
        
@@ -81,9 +82,9 @@ class Game
         newOrgs.clear();
       
         
-        for(Food f : ff.foods)
+        for(Plant p : pf.plants)
         {
-          f.update(deltatime);
+          p.update(deltatime);
         }
       }   
    
@@ -98,10 +99,10 @@ class Game
         o.display();
       }
       
-      // --- Display foods ---
-      for(Food f : ff.foods)
+      // --- Display plants ---
+      for(Plant p : pf.plants)
       {
-        f.display();
+        p.display();
       }
 }
 
@@ -110,7 +111,7 @@ void changeGameTime()
 {
     if(!fastForward) 
     {
-      ff.gameTime = 100;
+      pf.gameTime = 100;
       for(Organism o : orgs)
       {
         o.gameTime = 100;
@@ -119,7 +120,7 @@ void changeGameTime()
     }
     else 
     {
-      ff.gameTime = 1;
+      pf.gameTime = 1;
       for(Organism o : orgs)
       {
         o.gameTime = 1;

@@ -1,14 +1,14 @@
-public class FoodFactory
+public class PlantFactory
 {
- ArrayList<Food> foods;
+ ArrayList<Plant> plants;
  float timer = 0;
  int gameTime = 1;
  
  
- FoodFactory()
+ PlantFactory()
  {
   
-  foods = new ArrayList<Food>(); 
+  plants = new ArrayList<Plant>(); 
    
  }
  
@@ -19,7 +19,7 @@ public class FoodFactory
    if(timer > 250/gameTime)
    {
     timer = 0;
-    foods.add( new Food(random(10, width - 10), random(10, height - 10) ) );
+    plants.add( new Plant(random(10, width - 10), random(10, height - 10) ) );
      
    }
    

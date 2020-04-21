@@ -5,13 +5,13 @@ class Gestion
   Menu menu;
   
   int nOrgs;
-  int nFoods;
+  int nPlants;
   
   
   Gestion()
   {
     nOrgs = 5;
-    nFoods = 3;
+    nPlants = 3;
     menu = new Menu();
     game = null;
     
@@ -20,7 +20,7 @@ class Gestion
   void initGame()
   {
    
-    game = new Game(nOrgs, nFoods);
+    game = new Game(nOrgs, nPlants);
     
   }
   
@@ -51,7 +51,7 @@ class Gestion
     else
     {
      
-      menu.display(nOrgs, nFoods);
+      menu.display(nOrgs, nPlants);
       
     }
     
@@ -71,10 +71,10 @@ class Gestion
       case 2: nOrgs -= 1;
       break;
       
-      case 3: nFoods += 1;
+      case 3: nPlants += 1;
       break;
       
-      case 4: nFoods -= 1;
+      case 4: nPlants -= 1;
       break;
       
     }

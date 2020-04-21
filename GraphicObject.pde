@@ -11,9 +11,9 @@ abstract class Object
   int gameTime = 1;
   
   
-  abstract void update(float deltaTime);
+  //abstract void update(float deltaTime);
 
- abstract void display();
+  abstract void display();
 
  
   

@@ -1,6 +1,7 @@
-class Organism extends Object
+class Organism extends Food
 {
-  Food target;
+  Plant target;
+  Organism prey;
   PVector xoff = new PVector(0,0);
   PVector yoff = new PVector(0,0);
   float speed;
@@ -113,7 +114,7 @@ class Organism extends Object
   
 //=============================Update=============================
   
-  void update(float deltaTime)
+  void update(float deltaTime, ArrayList<Plant> pL, ArrayList<Organism> oL)
   {
     
     noiseSeed(seed);
@@ -121,11 +122,11 @@ class Organism extends Object
     timer += deltaTime;
     if(timer > 1000)
     {
-     
       energy -= (size/2)*speed*gameTime;
       timer = 0;
-      
     }
+ 
+    findPlant(pL);
  
     if(target != null)
     {
@@ -169,28 +170,28 @@ class Organism extends Object
 
 //=============================Functions=============================  
 
-//-----------------------------Find Food----------------------------- 
-  void findFood(ArrayList<Food> fL)
+//-----------------------------Find Plant----------------------------- 
+  void findPlant(ArrayList<Plant> pL)
   {
     
     target = null;
     
-    for(Food f : fL)
+    for(Plant p : pL)
     {
   
-      if(location.dist(f.location) < range)
+      if(location.dist(p.location) < range)
       {
   
         if(target == null) 
         {
-          target = f;
+          target = p;
           target.fillColor = color(255,0,0);
         }
-        else if(location.dist(f.location) < location.dist(target.location))
+        else if(location.dist(p.location) < location.dist(target.location))
         {
           
           target.fillColor = color(0,0,255);
-          target = f;
+          target = p;
           target.fillColor = color(255,0,0);
     
         }

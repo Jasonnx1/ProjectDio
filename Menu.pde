@@ -23,12 +23,12 @@ class Menu
    }
    
      // ----- DISPLAY -----
-   void display(int nOrgs, int nFoods)
+   void display(int nOrgs, int nPlants)
    {
       background(background);
       textSize(20);
       text("Number of starting Organisms: " + str(nOrgs), 80,170);
-      text("Number of starting Food: " + str(nFoods), 880,170);
+      text("Number of starting Plant: " + str(nPlants), 880,170);
       textSize(45);
       text("Press ENTER to begin", 400, height/2);  
       
