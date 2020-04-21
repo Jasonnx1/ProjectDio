@@ -2,7 +2,8 @@ class Game
 {
   
   
-  ArrayList<Organism> orgs, deadOrgs, newOrgs;
+  ArrayList<Organism> orgs, newOrgs;
+  ArrayList<Food> deadOrgs, corpses;
   PlantFactory pf;
   boolean pause;
   boolean fastForward;
@@ -24,14 +25,15 @@ class Game
   
   
   orgs = new ArrayList<Organism>();
-  deadOrgs = new ArrayList<Organism>();
+  deadOrgs = new ArrayList<Food>();
   newOrgs = new ArrayList<Organism>();
+  corpses = new ArrayList<Food>();
   
   for(int i = 0; i < nOrgs; i++)
   {
     orgs.add(new Organism());
   }
-  
+ 
    
    
  }
@@ -48,19 +50,32 @@ class Game
         {
           
           
-          o.update(deltatime, pf.plants, orgs);
+          o.update(deltatime, pf.plants, orgs, corpses);
           //o.findPlant(pf.plants);
           
           if(o.eat())
           {
-            pf.plants.remove(o.target);
+            if(o.target.getClass() == Plant.class)
+            {
+              pf.plants.remove(o.target);
+            }
+            else if (o.target.getClass() == Organism.class)
+            {
+              if(o.target.energy > 0 ) deadOrgs.add(o.target);
+              else corpses.remove(o.target);
+            }
+            
             o.target = null;      
           }
        
           
           if(o.energy<=0)
           {
+            o.fillColor = color(50,50,50);
+            o.range = 0;
+            o.energy = 0;
             deadOrgs.add(o);
+            corpses.add(o);
           }
           else if(o.energy > int(o.size*30))
           {
@@ -69,7 +84,7 @@ class Game
           }
         }
         
-        for(Organism dO : deadOrgs)
+        for(Food dO : deadOrgs)
         {
           orgs.remove(dO);
         }
@@ -103,6 +118,11 @@ class Game
       for(Plant p : pf.plants)
       {
         p.display();
+      }
+      
+      for(Food dO: corpses)
+      {
+        dO.display();
       }
 }
 

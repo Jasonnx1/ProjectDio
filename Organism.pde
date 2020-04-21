@@ -10,7 +10,7 @@ class Organism extends Food
   float speed;
   float range;
   float size;
-  int energy;
+  //int energy;
   float timer = 0;
   long seed;
   
@@ -124,13 +124,13 @@ class Organism extends Food
   
 //=============================Update=============================
   
-  void update(float deltaTime, ArrayList<Plant> pL, ArrayList<Organism> oL)
+  void update(float deltaTime, ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL)
   {
     
     noiseSeed(seed);
     
     
-    ai.update(deltaTime, pL,oL);
+    ai.update(deltaTime, pL,oL, doL);
     
     /*
     timer += deltaTime;

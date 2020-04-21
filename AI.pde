@@ -2,12 +2,13 @@ class AI
 {
   Organism org;
   
+  
   AI(Organism o)
   {
     org = o;
   }
   
-  void update(float deltaTime,ArrayList<Plant> pL, ArrayList<Organism> oL)
+  void update(float deltaTime,ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL)
   {
     
     org.timer += deltaTime;
@@ -17,10 +18,13 @@ class AI
       org.timer = 0;
     }
     
-    scan(pL, oL);
+    scan(pL, oL, doL);
  
-    
-    if(org.target != null)
+    if(org.predators.size() > 0)
+    {
+      flee();
+    }
+    else if(org.target != null)
     {
       forage();
     }
@@ -32,19 +36,24 @@ class AI
   
 //=============================Scan=============================
   
-  void scan(ArrayList<Plant> pL, ArrayList<Organism> oL)
+  void scan(ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL)
   {
     findPlant(pL);
+    findCorpse(doL);
     findPrey(oL);
     if(org.prey != null)
     {
-      if(org.location.dist(org.prey.location) <= org.location.dist(org.target.location))
+      if(org.target != null)
       {
-        org.target = org.prey;
+        if(org.location.dist(org.prey.location) <= org.location.dist(org.target.location))
+        {
+          org.target = org.prey;
+        }
       }
+      else org.target = org.prey; 
     }
     
-    //findPredator(oL);
+    findPredator(oL);
   }
   
 
@@ -63,15 +72,30 @@ class AI
         if(org.target == null) 
         {
           org.target = p;
-          org.target.fillColor = color(255,0,0);
         }
         else if(org.location.dist(p.location) < org.location.dist(org.target.location))
-        {
-          
-          org.target.fillColor = color(0,0,255);
+        {         
           org.target = p;
-          org.target.fillColor = color(255,0,0);
-    
+        }
+      }
+    }
+  }
+  
+  void findCorpse(ArrayList<Food> doL)
+  {
+    for(Food o : doL)
+    {
+  
+      if(org.location.dist(o.location) < org.range)
+      {
+  
+        if(org.target == null) 
+        {
+          org.target = o;
+        }
+        else if(org.location.dist(o.location) < org.location.dist(org.target.location))
+        {         
+          org.target = o;
         }
       }
     }
@@ -87,7 +111,7 @@ class AI
       if(org.location.dist(o.location) < org.range)
       {
         
-        if(org.size > o.size + 5)
+        if(org.size > o.size + 2)
         {
           
           if(org.prey == null) 
@@ -106,6 +130,23 @@ class AI
       
     }
     
+  }
+  
+  void findPredator(ArrayList<Organism> oL)
+  {
+    org.predators.clear();
+    
+    for(Organism o : oL)
+    {
+  
+      if(org.location.dist(o.location) < org.range)
+      {        
+        if(o.size > org.size + 2)
+        {
+          org.predators.add(o);
+        }
+      }
+    }
   }
   
   
@@ -181,6 +222,56 @@ class AI
     org.location.add(dir);
   }
   
-  
-  
+  void flee()
+  {
+    
+    PVector sumCohesion = new PVector();      
+
+    //sumCohesion.mult(0);
+
+    for (Organism other : org.predators) 
+    {
+       sumCohesion.add(other.location);
+    }
+
+
+    /*
+    PVector _target = new PVector();
+    _target = org.target.location.copy();
+    */
+    
+    if(org.target != null)
+    {
+      if(org.location.dist(sumCohesion) > org.location.dist(org.target.location))
+      {
+        if(org.location.dist(org.target.location) < sumCohesion.dist(org.target.location) + (org.location.dist(org.target.location)/2))
+        {
+          forage();
+        }
+        else
+        {
+          PVector dir = sumCohesion.add(org.location);
+          dir.limit(org.speed*org.gameTime);
+          
+          org.location.add(dir);     
+        }
+        
+      }
+      else
+      {
+        PVector dir = sumCohesion.add(org.location);
+        dir.limit(org.speed*org.gameTime);
+        
+        org.location.add(dir);     
+      }
+    }
+    else
+    {
+      PVector dir = sumCohesion.add(org.location);
+      dir.limit(org.speed*org.gameTime);
+      
+      org.location.add(dir);     
+    }
+    
+  } 
 }
