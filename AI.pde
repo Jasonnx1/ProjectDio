@@ -10,6 +10,13 @@ class AI
   void update(float deltaTime,ArrayList<Plant> pL, ArrayList<Organism> oL)
   {
     
+    org.timer += deltaTime;
+    if(org.timer > 1000)
+    {
+      org.energy -= (org.size/2)*org.speed*org.gameTime;
+      org.timer = 0;
+    }
+    
     scan(pL, oL);
  
     
@@ -28,7 +35,15 @@ class AI
   void scan(ArrayList<Plant> pL, ArrayList<Organism> oL)
   {
     findPlant(pL);
-    //findPrey(oL);
+    findPrey(oL);
+    if(org.prey != null)
+    {
+      if(org.location.dist(org.prey.location) <= org.location.dist(org.target.location))
+      {
+        org.target = org.prey;
+      }
+    }
+    
     //findPredator(oL);
   }
   
@@ -78,13 +93,11 @@ class AI
           if(org.prey == null) 
           {
             org.prey = o;
-            org.target.fillColor = color(255,0,0);
+            
           }
-          else if(org.location.dist(o.location) < org.location.dist(org.target.location))
+          else if(org.location.dist(o.location) < org.location.dist(org.prey.location))
           {
-            org.target.fillColor = color(0,0,255);
             org.prey = o;
-            org.target.fillColor = color(255,0,0);
           }
           
         }
@@ -107,7 +120,7 @@ class AI
   
   
 //-----------------------------Eat-----------------------------   
-  boolean eat()
+  /*boolean eat()
   {
     if(org.target != null)
     {
@@ -120,7 +133,7 @@ class AI
       }
     }
     return false;
-  }
+  }*/
 
 //-----------------------------Seek----------------------------- 
   void search()

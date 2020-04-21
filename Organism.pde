@@ -1,7 +1,10 @@
 class Organism extends Food
 {
-  Plant target;
+  Food target;
   Organism prey;
+  ArrayList<Organism> predators = new ArrayList<Organism>();
+  AI ai = new AI(this);
+  
   PVector xoff = new PVector(0,0);
   PVector yoff = new PVector(0,0);
   float speed;
@@ -28,6 +31,9 @@ class Organism extends Food
      fillColor = color(r,g,b);
      energy = int(size*20);
      seed = ( (long)random(0, 1000000) );
+     
+     NutritiousValue = (int) size*10;
+     CollectionTime = (int) size;
   }
   
   void checkEdges()
@@ -107,6 +113,10 @@ class Organism extends Food
      gameTime = parent.gameTime;
      fillColor = color(r,g,b);
      energy = int(size*10);
+     
+     NutritiousValue = (int) size*10;
+     CollectionTime = (int) size;
+     predators = new ArrayList<Organism>();
   }
   
   
@@ -119,6 +129,10 @@ class Organism extends Food
     
     noiseSeed(seed);
     
+    
+    ai.update(deltaTime, pL,oL);
+    
+    /*
     timer += deltaTime;
     if(timer > 1000)
     {
@@ -142,6 +156,7 @@ class Organism extends Food
     {
       seek();
     }
+    */
     
     checkEdges();
     
@@ -207,7 +222,8 @@ class Organism extends Food
       if(location.dist(target.location) < size)
       {
         // nutrition();
-        energy += target.NutritiousValue;
+        //energy += target.NutritiousValue;
+        energy +=50;
         println(energy);
         return true;
       }

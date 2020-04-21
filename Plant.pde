@@ -1,12 +1,14 @@
-class Plant extends Object
+class Plant extends Food
 {
-  int NutritiousValue = 50;
-  int CollectionTime = 10;
+  int NutritiousValue;
+  int CollectionTime;
   
   Plant(float x, float y)
   {
     location = new PVector(x,y);
     fillColor = color(50,255,50);
+    NutritiousValue = 50;
+    CollectionTime = 10;
   }
   
   void update(float deltaTime)
