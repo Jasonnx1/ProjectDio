@@ -161,6 +161,7 @@ class Organism extends Object
     stroke(strokeColor);
     ellipse(location.x, location.y, size*2, size*2);
     fill(0);
+    textSize(11);
     text(energy, location.x-10, location.y-10);
   }
 
