@@ -28,9 +28,17 @@ class Button
     {
        text("-", loc.x+7, loc.y + 19); 
     }
-    else
+    else if(increment == 1)
     {
       text("+", loc.x+5, loc.y + 18);
+    }
+    else if(increment == 2)
+    {
+      text("<", loc.x+5, loc.y + 18);
+    }
+    else if(increment == -2)
+    {
+      text(">", loc.x+5, loc.y + 18);
     }
     
   }

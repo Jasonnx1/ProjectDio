@@ -7,15 +7,33 @@ class Game
   PlantFactory pf;
   boolean pause;
   boolean fastForward;
+    Terrain terrain;
   
   
- Game(int nOrgs, int nPlants)
+ Game(int nOrgs, int nPlants, int _terrain)
  {
+   switch(_terrain)
+   {
+    
+     case 0: terrain = new Terrain(color(#228B22), 250); //Forest
+     break;
+     
+     case 1: terrain = new Terrain(color(#FFDF00), 100); //Plains
+     break;
+     
+     case 2: terrain = new Terrain(color(#7a7372), 600); //Mountain
+     break;
+     
+     case 3: terrain = new Terrain(color(#d0ec98), 500); //Tundra
+     break;
+     
+     
+   }
    
   pause = false;
   fastForward = false;
   
-  pf = new PlantFactory();
+  pf = new PlantFactory(terrain.foodRate);
   pf.plants = new ArrayList<Plant>();
   
   for(int i = 0; i < nPlants; i++)
@@ -108,6 +126,8 @@ class Game
  
  void display()
  {
+   
+      terrain.display();
        // --- Display organisms ---
       for(Organism o : orgs)
       {

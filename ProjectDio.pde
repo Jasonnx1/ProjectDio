@@ -32,7 +32,6 @@ void update(int deltatime)
 
 void display()
 {
-  background(#3BBF32);
   gestion.display();
 }
 

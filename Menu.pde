@@ -5,6 +5,7 @@ class Menu
 
   ArrayList<Button> buttons;
   PImage background;
+  int terrainChoice;
   
   // ---- CTOR ----
    Menu()
@@ -17,9 +18,13 @@ class Menu
      buttons.add( new Button(new PVector(1000,100), 25, 1, 3) );
      buttons.add( new Button(new PVector(1000,200), 25, -1, 4) );
      
+     buttons.add( new Button(new PVector(width/2 - width/20,height/2 - height/10), 25, 2, 5) );
+     buttons.add( new Button(new PVector(width/2 + width/20,height/2 - height/10), 25, -2, 6) );
+     
      background = loadImage("images/background.jpg");
      background.resize(width, height);
      
+     terrainChoice = 0;
    }
    
      // ----- DISPLAY -----
@@ -38,6 +43,23 @@ class Menu
         b.display();
         
       }
+      
+      textMode(CENTER);
+      switch(terrainChoice)
+      {   
+          case 0: text("Forest", width/2 - width/50, height/2 - height/10);
+          break;
+          
+          case 1: text("Plains", width/2 - width/50, height/2 - height/10);
+          break;
+          
+          case 2: text("Mountains", width/2 - width/50, height/2 - height/10);
+          break;
+          
+          case 3: text("Tundra", width/2 - width/50, height/2 - height/10);
+          break;
+      }
+      
    }
    
    

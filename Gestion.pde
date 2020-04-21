@@ -20,7 +20,7 @@ class Gestion
   void initGame()
   {
    
-    game = new Game(nOrgs, nPlants);
+    game = new Game(nOrgs, nPlants, menu.terrainChoice);
     
   }
   
@@ -75,6 +75,12 @@ class Gestion
       break;
       
       case 4: nPlants -= 1;
+      break;
+      
+      case 5: menu.terrainChoice += 1; if(menu.terrainChoice > 3) menu.terrainChoice = 0;
+      break;
+      
+      case 6: menu.terrainChoice -= 1; if(menu.terrainChoice < 0) menu.terrainChoice = 3;
       break;
       
     }
