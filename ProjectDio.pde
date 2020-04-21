@@ -62,3 +62,20 @@ void keyPressed()
   }
 
 }
+
+// ----- MOUSE PRESSED EVENT FOR MENU -----
+void mousePressed()
+{
+
+ if(gestion.game == null)
+ {
+   
+    if(mouseButton == LEFT)
+    {    
+       gestion.checkClick(new PVector(mouseX, mouseY) );
+    }
+ 
+ }
+  
+  
+}

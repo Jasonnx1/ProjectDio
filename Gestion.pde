@@ -24,22 +24,6 @@ class Gestion
     
   }
   
-  void changeNOrgs(int i)
-  {
-    nOrgs += i;
-    
-    if(nOrgs < 1)
-    nOrgs = 1; 
-  }
-  
-  
-  void changeNFoods(int i)
-  {   
-    nFoods += i;
-    
-    if(nFoods < 1)
-    nFoods = 1; 
-  }
   
   void update(float deltatime)
   {
@@ -72,6 +56,29 @@ class Gestion
     }
     
   
+  }
+  
+  void checkClick(PVector mouse)
+  {
+   
+    int i = menu.checkClick(mouse);
+    
+    switch(i)
+    {
+      case 1: nOrgs += 1;
+      break;
+      
+      case 2: nOrgs -= 1;
+      break;
+      
+      case 3: nFoods += 1;
+      break;
+      
+      case 4: nFoods -= 1;
+      break;
+      
+    }
+    
   }
   
 
