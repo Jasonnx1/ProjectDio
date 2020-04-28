@@ -44,7 +44,6 @@ class Menu
         
       }
       
-      textMode(CENTER);
       switch(terrainChoice)
       {   
           case 0: text("Forest", width/2 - width/50, height/2 - height/10);

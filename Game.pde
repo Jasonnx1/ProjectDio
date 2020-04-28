@@ -7,7 +7,7 @@ class Game
   PlantFactory pf;
   boolean pause;
   boolean fastForward;
-    Terrain terrain;
+  Terrain terrain;
   
   
  Game(int nOrgs, int nPlants, int _terrain)
@@ -15,16 +15,16 @@ class Game
    switch(_terrain)
    {
     
-     case 0: terrain = new Terrain(color(#228B22), 250); //Forest
+     case 0: terrain = new Terrain(color(#228B22), 250, 1); //Forest
      break;
      
-     case 1: terrain = new Terrain(color(#FFDF00), 100); //Plains
+     case 1: terrain = new Terrain(color(#FFDF00), 100, 0.7); //Plains
      break;
      
-     case 2: terrain = new Terrain(color(#7a7372), 600); //Mountain
+     case 2: terrain = new Terrain(color(#7a7372), 600, 2); //Mountain
      break;
      
-     case 3: terrain = new Terrain(color(#d0ec98), 500); //Tundra
+     case 3: terrain = new Terrain(color(#d0ec98), 500, 1.3); //Tundra
      break;
      
      
@@ -68,7 +68,7 @@ class Game
         {
           
           
-          o.update(deltatime, pf.plants, orgs, corpses);
+          o.update(deltatime, pf.plants, orgs, corpses, terrain.moveDiff);
           //o.findPlant(pf.plants);
           
           if(o.eat())

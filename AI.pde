@@ -8,13 +8,13 @@ class AI
     org = o;
   }
   
-  void update(float deltaTime,ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL)
+  void update(float deltaTime,ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL, float moveDiff)
   {
     
     org.timer += deltaTime;
     if(org.timer > 1000)
     {
-      org.energy -= (org.size/2)*org.speed*org.gameTime;
+      org.energy -= ((org.size/2)*org.speed*org.gameTime)*moveDiff;
       org.timer = 0;
     }
     

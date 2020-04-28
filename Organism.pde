@@ -124,13 +124,13 @@ class Organism extends Food
   
 //=============================Update=============================
   
-  void update(float deltaTime, ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL)
+  void update(float deltaTime, ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL, float moveDiff)
   {
     
     noiseSeed(seed);
     
     
-    ai.update(deltaTime, pL,oL, doL);
+    ai.update(deltaTime, pL,oL, doL, moveDiff);
     
     /*
     timer += deltaTime;
