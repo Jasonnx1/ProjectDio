@@ -3,6 +3,13 @@ class Gestion
   
   Game game;
   Menu menu;
+  UI ui;
+  
+  SoundFile menuMusic;
+  SoundFile gameMusic;
+  
+  int year = 0;
+  float timer = 0;
   
   int nOrgs;
   int nPlants;
@@ -14,6 +21,7 @@ class Gestion
     nPlants = 3;
     menu = new Menu();
     game = null;
+    ui = new UI();
     
   }
   
@@ -21,17 +29,41 @@ class Gestion
   {
    
     game = new Game(nOrgs, nPlants, menu.terrainChoice);
-    
+    menu.buttons.clear();
+    year = 0;
+    timer = 0;
+    menuMusic.stop();
   }
   
   
   void update(float deltatime)
   {
     
+    
+    
     if(game != null)
     {
-     
-      game.update(deltatime);
+      if(!game.pause)
+      {
+          timer += deltatime;
+          if(timer > 10/game.gameTime)
+          { 
+            if(game.gameTime > 1)
+            {
+             
+              year += timer/10;
+              
+            }
+            else
+            {
+             year++; 
+             timer = 0;    
+            }
+            
+          }
+         
+          game.update(deltatime);
+      }
       
     }
 
@@ -42,16 +74,26 @@ class Gestion
   void display()
   {
     
+    
     if(game != null)
     {
      
       game.display();
+      ui.display(year);
+
+      
+      if(game.pause)
+      {
+       menu.display(nOrgs, nPlants, 2); 
+      }
       
     }
     else
     {
      
-      menu.display(nOrgs, nPlants);
+      menu.display(nOrgs, nPlants, 1);
+      
+   
       
     }
     

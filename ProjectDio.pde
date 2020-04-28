@@ -4,12 +4,33 @@ int currentTime;
 
 Gestion gestion;
 
+// Initialiser les musiques
+SoundFile menuMus;
+String menuPath = ("sound/menu.mp3");
+
+SoundFile gameMus;
+String gamePath = ("sound/game.mp3");
+
 void setup()
 {
+  
   size(1200,800, P3D);
   currentTime = millis();
   previousTime = millis();
   gestion = new Gestion();
+  textAlign(CENTER);
+  
+  // Envoyer les musiques à la classe de gestion
+  menuMus = new SoundFile(this, menuPath);
+  menuMus.amp(0.005);
+  gestion.menuMusic = menuMus;
+  gestion.menuMusic.loop();
+  
+  gameMus = new SoundFile(this, gamePath);
+  gameMus.amp(0.03);
+  gestion.gameMusic = gameMus;
+
+  
 }
 
 
@@ -39,26 +60,34 @@ void keyPressed()
 {
   switch(key)
   {
-   case 'r':   setup();
+    case 'r':   if(gestion.game != null) if(gestion.game.pause){ gestion.initGame(); }
     break;
     
-    case ' ':   
+    case 'm': if(gestion.game != null) if(gestion.game.pause){gestion.gameMusic.stop(); setup();}
+    break;
+    
+    case 'p':   
                if(gestion.game != null)
                {
                   if(!gestion.game.pause) gestion.game.pause = true;
                   else gestion.game.pause = false;
                }
+               
     break;
     
     case 'q':  if(gestion.game != null)gestion.game.changeGameTime(); 
     break;
   }
   
-  if(keyCode == ENTER)
-  {
-   if(gestion.game == null)
-    gestion.initGame();   
-  }
+    if(keyCode == ENTER)
+    {
+     if(gestion.game == null) 
+     {
+      gestion.initGame(); 
+      gestion.gameMusic.loop();
+     }
+    }
+  
 
 }
 

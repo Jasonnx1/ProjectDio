@@ -8,6 +8,7 @@ class Game
   boolean pause;
   boolean fastForward;
   Terrain terrain;
+  int gameTime = 1;
   
   
  Game(int nOrgs, int nPlants, int _terrain)
@@ -151,6 +152,9 @@ void changeGameTime()
 {
     if(!fastForward) 
     {
+      
+      gameTime = 100;
+      
       pf.gameTime = 100;
       for(Organism o : orgs)
       {
@@ -160,6 +164,7 @@ void changeGameTime()
     }
     else 
     {
+      gameTime = 1;
       pf.gameTime = 1;
       for(Organism o : orgs)
       {

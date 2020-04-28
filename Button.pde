@@ -18,7 +18,7 @@ class Button
   {
     
     fill(255);
-    rectMode(CORNER);
+    rectMode(CENTER);
     rect(loc.x, loc.y, size, size);
     
     
@@ -26,19 +26,19 @@ class Button
     fill(0);
     if(increment == -1)
     {
-       text("-", loc.x+7, loc.y + 19); 
+       text("-", loc.x, loc.y+7); 
     }
     else if(increment == 1)
     {
-      text("+", loc.x+5, loc.y + 18);
+      text("+", loc.x, loc.y+7);
     }
     else if(increment == 2)
     {
-      text("<", loc.x+5, loc.y + 18);
+      text("<", loc.x, loc.y+7);
     }
     else if(increment == -2)
     {
-      text(">", loc.x+5, loc.y + 18);
+      text(">", loc.x, loc.y+7);
     }
     
   }
