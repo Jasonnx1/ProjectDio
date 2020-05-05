@@ -15,6 +15,7 @@ void setup()
 {
   
   size(1200,800, P3D);
+  
   currentTime = millis();
   previousTime = millis();
   gestion = new Gestion();

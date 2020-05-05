@@ -13,12 +13,20 @@ class Gestion
   
   int nOrgs;
   int nPlants;
-  
+
+  float baseSize;
+  float baseSpeed;
+  int baseRange;
   
   Gestion()
   {
     nOrgs = 5;
     nPlants = 3;
+    
+    baseSize = 7;
+    baseSpeed = 1;
+    baseRange = 150;
+    
     menu = new Menu();
     game = null;
     ui = new UI();
@@ -28,7 +36,7 @@ class Gestion
   void initGame()
   {
    
-    game = new Game(nOrgs, nPlants, menu.terrainChoice);
+    game = new Game(nOrgs, nPlants, menu.terrainChoice, baseSpeed, baseSize, baseRange);
     menu.buttons.clear();
     year = 0;
     timer = 0;
@@ -66,6 +74,10 @@ class Gestion
       }
       
     }
+    else
+    {    
+      menu.checkMouse(new PVector(mouseX, mouseY) );    
+    }
 
     
   }
@@ -84,14 +96,14 @@ class Gestion
       
       if(game.pause)
       {
-       menu.display(nOrgs, nPlants, 2); 
+       menu.display(nOrgs, nPlants, 2, baseSpeed, baseSize, baseRange); 
       }
       
     }
     else
     {
      
-      menu.display(nOrgs, nPlants, 1);
+      menu.display(nOrgs, nPlants, 1,  baseSpeed, baseSize, baseRange);
       
    
       
@@ -110,13 +122,13 @@ class Gestion
       case 1: nOrgs += 1;
       break;
       
-      case 2: nOrgs -= 1;
+      case 2: if(nOrgs > 1)nOrgs -= 1;
       break;
       
       case 3: nPlants += 1;
       break;
       
-      case 4: nPlants -= 1;
+      case 4: if(nPlants> 1)nPlants -= 1;
       break;
       
       case 5: menu.terrainChoice += 1; if(menu.terrainChoice > 3) menu.terrainChoice = 0;
@@ -124,6 +136,25 @@ class Gestion
       
       case 6: menu.terrainChoice -= 1; if(menu.terrainChoice < 0) menu.terrainChoice = 3;
       break;
+      
+      case 7: baseSpeed += 0.1;
+      break;
+      
+      case 8: if(baseSpeed > 0.1)baseSpeed -= 0.1;
+      break;
+      
+      case 9: baseSize += 0.1;
+      break;
+      
+      case 10: if(baseSize > 0.1)baseSize -= 0.1;
+      break;
+      
+      case 11: baseRange += 1;
+      break;
+      
+      case 12: if(baseRange > 1)baseRange -= 1;
+      break;
+      
       
     }
     

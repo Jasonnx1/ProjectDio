@@ -35,13 +35,19 @@ class Organism extends Food
 //=============================Constructors=============================
 
 //-----------------------------Basic---------------------------- 
-  Organism()
+
+    
+    
+    
+  Organism(float sp, float si, int ra)
   {
      location = new PVector(random(0, width), random(0, height));
-     speed = 2;
-     size = 10;
-     range = 150;
-     r = 150; g = 150; b = 150;
+     
+     speed = sp;
+     size = si;
+     range = ra;
+     
+     r = (int)sp; g = (int)si; b = ra;
      fillColor = color(r,g,b);
      energy = int(size*20);
      seed = ( (long)random(0, 1000000) );
@@ -201,6 +207,10 @@ class Organism extends Food
      CollectionTime = (int) size;
      predators = new ArrayList<Organism>();
      
+     if(speed < 0.1)
+     {
+      speed = 0.1; 
+     }
      
   }
   

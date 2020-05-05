@@ -1,11 +1,12 @@
 class Button
 {
-  int increment;
+  float increment;
   PVector loc;
   int size;
   int id;
+  color c = color(255);
   
-  Button(PVector _loc, int _size, int _increment, int _id)
+  Button(PVector _loc, int _size, float _increment, int _id)
   {
     loc = _loc;
     size = _size;  
@@ -17,18 +18,18 @@ class Button
   void display()
   {
     
-    fill(255);
+    fill(c);
     rectMode(CENTER);
     rect(loc.x, loc.y, size, size);
     
     
     textSize(20);
     fill(0);
-    if(increment == -1)
+    if(increment == -1 || increment == -0.1)
     {
        text("-", loc.x, loc.y+7); 
     }
-    else if(increment == 1)
+    else if(increment == 1 || increment == 0.1)
     {
       text("+", loc.x, loc.y+7);
     }
@@ -40,6 +41,7 @@ class Button
     {
       text(">", loc.x, loc.y+7);
     }
+   
     
   }
   

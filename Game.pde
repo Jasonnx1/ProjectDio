@@ -10,8 +10,10 @@ class Game
   Terrain terrain;
   int gameTime = 1;
   
+
   
- Game(int nOrgs, int nPlants, int _terrain)
+  
+ Game(int nOrgs, int nPlants, int _terrain, float baseSpeed, float baseSize, int baseRange)
  {
    switch(_terrain)
    {
@@ -50,7 +52,7 @@ class Game
   
   for(int i = 0; i < nOrgs; i++)
   {
-    orgs.add(new Organism());
+    orgs.add(new Organism(baseSpeed, baseSize, baseRange));
   }
  
    
