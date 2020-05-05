@@ -1,6 +1,7 @@
 class AI
 {
   Organism org;
+  Food plant;
 
   AI(Organism o)
   {
@@ -79,11 +80,13 @@ class AI
         }
       }
     }
+    plant = org.target;
   }
   
   void findCorpse(ArrayList<Food> doL)
   {
-    Food plant = org.target;
+    
+    boolean first = true;
 
     for(Food o : doL)
     {
@@ -103,11 +106,23 @@ class AI
               }
             }
         }
-        else if(org.diet >= 5)
+        else if(org.diet >= 5 && org.diet <= 15)
         {
           if(org.target == null) 
           {
             org.target = o;
+          }
+          else if(org.location.dist(o.location) < org.location.dist(org.target.location))
+          {         
+            org.target = o;
+          }
+        }
+        else if(org.diet > 15)
+        {
+          if(first == true) 
+          {
+            org.target = o;
+            first = false;
           }
           else if(org.location.dist(o.location) < org.location.dist(org.target.location))
           {         
@@ -130,17 +145,31 @@ class AI
         
         if(org.size > o.size + 2)
         {
-          
-          if(org.prey == null) 
+          if(org.diet > 1 && org.diet < 5)
           {
-            org.prey = o;
-            
+            if(plant == null)
+            {
+              if(org.prey == null) 
+              {
+                org.prey = o;
+              }
+              else if(org.location.dist(o.location) < org.location.dist(org.prey.location))
+              {
+                org.prey = o;
+              }
+            }
           }
-          else if(org.location.dist(o.location) < org.location.dist(org.prey.location))
+          else
           {
-            org.prey = o;
+            if(org.prey == null) 
+            {
+              org.prey = o;
+            }
+            else if(org.location.dist(o.location) < org.location.dist(org.prey.location))
+            {
+              org.prey = o;
+            }
           }
-          
         }
         
       }
