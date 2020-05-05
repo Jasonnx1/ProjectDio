@@ -1,8 +1,7 @@
 class AI
 {
   Organism org;
-  
-  
+
   AI(Organism o)
   {
     org = o;
@@ -38,9 +37,10 @@ class AI
   
   void scan(ArrayList<Plant> pL, ArrayList<Organism> oL, ArrayList<Food> doL)
   {
-    findPlant(pL);
-    findCorpse(doL);
-    findPrey(oL);
+    if(org.diet<20) findPlant(pL);
+    if(org.diet>1) findCorpse(doL);
+    if(org.diet>1 && org.aggression>1) findPrey(oL);
+    
     if(org.prey != null)
     {
       if(org.target != null)
@@ -83,19 +83,36 @@ class AI
   
   void findCorpse(ArrayList<Food> doL)
   {
+    Food plant = org.target;
+
     for(Food o : doL)
     {
-  
       if(org.location.dist(o.location) < org.range)
       {
-  
-        if(org.target == null) 
+        if(org.diet > 1 && org.diet < 5)
         {
-          org.target = o;
+            if(plant == null)
+            {
+              if(org.target == null) 
+              {
+                org.target = o;
+              }
+              else if(org.location.dist(o.location) < org.location.dist(org.target.location))
+              {         
+                org.target = o;
+              }
+            }
         }
-        else if(org.location.dist(o.location) < org.location.dist(org.target.location))
-        {         
-          org.target = o;
+        else if(org.diet >= 5)
+        {
+          if(org.target == null) 
+          {
+            org.target = o;
+          }
+          else if(org.location.dist(o.location) < org.location.dist(org.target.location))
+          {         
+            org.target = o;
+          }
         }
       }
     }

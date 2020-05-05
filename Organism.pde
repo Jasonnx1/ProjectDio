@@ -17,6 +17,20 @@ class Organism extends Food
   int mutationFactor, mutationRoll;
   int mutationChance = 1;
   int r,g,b;
+  
+  
+  //Comportements (0-20)
+  float social;
+  float aggression;
+  float passif;
+  
+  //Stats (0-20)
+  float attack;
+  float defense;
+  float camo;
+  
+  //Autre (0 = herb, 20 = meat)
+  float diet;
 
 //=============================Constructors=============================
 
@@ -32,36 +46,21 @@ class Organism extends Food
      energy = int(size*20);
      seed = ( (long)random(0, 1000000) );
      
+     
+     social = 10;
+     aggression = 10;
+     passif = 10;
+     //--------
+     attack = 10;
+     defense = 10;
+     camo = 10;
+     //--------
+     diet = 10;
+     
+     
      NutritiousValue = (int) size*10;
      CollectionTime = (int) size;
   }
-  
-  void checkEdges()
-  {
-    
-    //---------------------Check Edges for loop around--------------------------
-    if(location.x < -size)
-    {      
-      location.x = width + size;      
-    }
-    
-    if(location.x > width + size)
-    {
-      location.x = -size; 
-    }
-    
-    if(location.y < -size)
-    {      
-      location.y = height + size;      
-    }
-    
-    if(location.y > height + size)
-    {
-      location.y = -size; 
-    }
-  
-  }
-  
   
   Organism(Organism parent)
   {
@@ -110,6 +109,90 @@ class Organism extends Food
        b = parent.b;
      }
      
+     //~~~~~~~~~Social~~~~~~~~~
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
+     {
+       mutationFactor = int (random(3));
+       social = parent.social - 1 + mutationFactor;
+     }
+     else 
+     {
+       social = parent.social;
+     }
+     
+     //~~~~~~~~~Aggression~~~~~~~~~
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
+     {
+       mutationFactor = int (random(3));
+       aggression = parent.aggression - 1 + mutationFactor;
+     }
+     else 
+     {
+       aggression = parent.aggression;
+     }
+     
+     //~~~~~~~~~Passif~~~~~~~~~
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
+     {
+       mutationFactor = int (random(3));
+       passif = parent.passif - 1 + mutationFactor;
+     }
+     else 
+     {
+       passif = parent.passif;
+     }
+     
+     //~~~~~~~~~Attack~~~~~~~~~
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
+     {
+       mutationFactor = int (random(3));
+       attack = parent.attack - 1 + mutationFactor;
+     }
+     else 
+     {
+       attack = parent.attack;
+     }
+     
+     //~~~~~~~~~Defense~~~~~~~~~
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
+     {
+       mutationFactor = int (random(3));
+       defense = parent.defense - 1 + mutationFactor;
+     }
+     else 
+     {
+       defense = parent.defense;
+     }
+     
+     //~~~~~~~~~Camo~~~~~~~~~
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
+     {
+       mutationFactor = int (random(3));
+       camo = parent.camo - 1 + mutationFactor;
+     }
+     else 
+     {
+       camo = parent.camo;
+     }
+     
+     //~~~~~~~~~Camo~~~~~~~~~
+     mutationRoll = int (random(20));
+     if(mutationRoll < mutationChance)
+     {
+       mutationFactor = int (random(3));
+       diet = parent.diet - 1 + mutationFactor;
+     }
+     else 
+     {
+       diet = parent.diet;
+     }
+     
      gameTime = parent.gameTime;
      fillColor = color(r,g,b);
      energy = int(size*10);
@@ -117,10 +200,11 @@ class Organism extends Food
      NutritiousValue = (int) size*10;
      CollectionTime = (int) size;
      predators = new ArrayList<Organism>();
+     
+     
   }
   
-  
-  
+
   
 //=============================Update=============================
   
@@ -264,6 +348,31 @@ class Organism extends Food
     // Add Velocity
     
     location.add(dir);
+  }
+  
+  //---------------------Check Edges for loop around--------------------------
+  void checkEdges()
+  {
+    
+    if(location.x < -size)
+    {      
+      location.x = width + size;      
+    }
+    
+    if(location.x > width + size)
+    {
+      location.x = -size; 
+    }
+    
+    if(location.y < -size)
+    {      
+      location.y = height + size;      
+    }
+    
+    if(location.y > height + size)
+    {
+      location.y = -size; 
+    }
   }
   
   
